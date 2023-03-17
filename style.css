@@ -1,0 +1,12 @@
+input {
+    border: none;
+    /* background-color: blue; */
+}
+
+input[textBold]{
+    font-weight: bold;
+}
+
+input[fnt10]{
+    font-size: 10px;
+}
