@@ -1,3078 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Editor</title>
 </head>
 <body>
-<!--docxjs library predefined styles--><style>
-  .docx-wrapper {
-    background: white;
-    padding-bottom: 0px;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-  }
-  .docx-wrapper > section.docx {
-    background: white;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
-  }
-  .docx {
-    color: black;
-  }
-  section.docx {
-    box-sizing: border-box;
-    display: flex;
-    flex-flow: column nowrap;
-    position: relative;
-    overflow: hidden;
-  }
-  section.docx > article {
-    margin-bottom: auto;
-  }
-  .docx table {
-    border-collapse: collapse;
-  }
-  .docx table td,
-  .docx table th {
-    vertical-align: top;
-  }
-  .docx p {
-    margin: 0pt;
-    min-height: 1em;
-  }
-  .docx span {
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-  }
-  .docx a {
-    color: inherit;
-    text-decoration: inherit;
-  }</style
-><!--docxjs document theme values--><style>
-  .docx {
-    --docx-majorHAnsi-font: Calibri;
-    --docx-minorHAnsi-font: Cambria;
-    --docx-dk1-color: #000000;
-    --docx-lt1-color: #ffffff;
-    --docx-dk2-color: #1f497d;
-    --docx-lt2-color: #eeece1;
-    --docx-accent1-color: #4f81bd;
-    --docx-accent2-color: #c0504d;
-    --docx-accent3-color: #9bbb59;
-    --docx-accent4-color: #8064a2;
-    --docx-accent5-color: #4bacc6;
-    --docx-accent6-color: #f79646;
-    --docx-hlink-color: #0000ff;
-    --docx-folHlink-color: #800080;
-  }</style
-><!--docxjs document styles--><style>
-  .docx span {
-    font-family: Arial;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  .docx p {
-    line-height: 1.15;
-  }
-  p.docx_heading1 {
-    margin-top: 20pt;
-    margin-bottom: 6pt;
-  }
-  p.docx_heading1 span {
-    min-height: 20pt;
-    font-size: 20pt;
-  }
-  p.docx_heading2 {
-    margin-top: 18pt;
-    margin-bottom: 6pt;
-  }
-  p.docx_heading2 span {
-    font-weight: normal;
-    min-height: 16pt;
-    font-size: 16pt;
-  }
-  p.docx_heading3 {
-    margin-top: 16pt;
-    margin-bottom: 4pt;
-  }
-  p.docx_heading3 span {
-    font-weight: normal;
-    color: #434343;
-    min-height: 14pt;
-    font-size: 14pt;
-  }
-  p.docx_heading4 {
-    margin-top: 14pt;
-    margin-bottom: 4pt;
-  }
-  p.docx_heading4 span {
-    color: #666666;
-    min-height: 12pt;
-    font-size: 12pt;
-  }
-  p.docx_heading5 {
-    margin-top: 12pt;
-    margin-bottom: 4pt;
-  }
-  p.docx_heading5 span {
-    color: #666666;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  p.docx_heading6 {
-    margin-top: 12pt;
-    margin-bottom: 4pt;
-  }
-  p.docx_heading6 span {
-    font-style: italic;
-    color: #666666;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  p.docx_title {
-    margin-top: 0pt;
-    margin-bottom: 3pt;
-  }
-  p.docx_title span {
-    min-height: 26pt;
-    font-size: 26pt;
-  }
-  p.docx_subtitle {
-    margin-top: 0pt;
-    margin-bottom: 16pt;
-  }
-  p.docx_subtitle span {
-    font-family: Arial;
-    font-style: normal;
-    color: #666666;
-    min-height: 15pt;
-    font-size: 15pt;
-  }
-  table.docx_table1 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table1 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table2 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table2 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table3 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table3 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table4 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table4 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table5 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table5 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table6 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table6 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table7 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table7 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table8 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table8 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table9 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table9 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table10 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table10 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }
-  table.docx_table11 span {
-    font-family: Calibri;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  table.docx_table11 td {
-    padding-top: 0pt;
-    padding-left: 5.4pt;
-    padding-bottom: 0pt;
-    padding-right: 5.4pt;
-  }</style
-><!--docxjs document numbering styles--><style>
-  p.docx-num-1-0:before {
-    content: "●\9";
-    counter-increment: docx-num-1-0;
-    font-family: Noto Sans Symbols;
-    color: #575a5d;
-  }
-  p.docx-num-1-0 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 36pt;
-  }
-  p.docx-num-1-0 {
-    counter-reset: docx-num-1-1;
-  }
-  p.docx-num-1-1:before {
-    content: "o\9";
-    counter-increment: docx-num-1-1;
-    font-family: Courier New;
-  }
-  p.docx-num-1-1 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 72pt;
-  }
-  p.docx-num-1-1 {
-    counter-reset: docx-num-1-2;
-  }
-  p.docx-num-1-2:before {
-    content: "▪\9";
-    counter-increment: docx-num-1-2;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-1-2 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 108pt;
-  }
-  p.docx-num-1-2 {
-    counter-reset: docx-num-1-3;
-  }
-  p.docx-num-1-3:before {
-    content: "●\9";
-    counter-increment: docx-num-1-3;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-1-3 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 144pt;
-  }
-  p.docx-num-1-3 {
-    counter-reset: docx-num-1-4;
-  }
-  p.docx-num-1-4:before {
-    content: "o\9";
-    counter-increment: docx-num-1-4;
-    font-family: Courier New;
-  }
-  p.docx-num-1-4 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 180pt;
-  }
-  p.docx-num-1-4 {
-    counter-reset: docx-num-1-5;
-  }
-  p.docx-num-1-5:before {
-    content: "▪\9";
-    counter-increment: docx-num-1-5;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-1-5 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 216pt;
-  }
-  p.docx-num-1-5 {
-    counter-reset: docx-num-1-6;
-  }
-  p.docx-num-1-6:before {
-    content: "●\9";
-    counter-increment: docx-num-1-6;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-1-6 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 252pt;
-  }
-  p.docx-num-1-6 {
-    counter-reset: docx-num-1-7;
-  }
-  p.docx-num-1-7:before {
-    content: "o\9";
-    counter-increment: docx-num-1-7;
-    font-family: Courier New;
-  }
-  p.docx-num-1-7 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 288pt;
-  }
-  p.docx-num-1-7 {
-    counter-reset: docx-num-1-8;
-  }
-  p.docx-num-1-8:before {
-    content: "▪\9";
-    counter-increment: docx-num-1-8;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-1-8 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 324pt;
-  }
-  p.docx-num-2-0:before {
-    content: "●\9";
-    counter-increment: docx-num-2-0;
-    font-family: Noto Sans Symbols;
-    color: #be8900;
-  }
-  p.docx-num-2-0 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 22.5pt;
-  }
-  p.docx-num-2-0 {
-    counter-reset: docx-num-2-1;
-  }
-  p.docx-num-2-1:before {
-    content: "o\9";
-    counter-increment: docx-num-2-1;
-    font-family: Courier New;
-  }
-  p.docx-num-2-1 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 72pt;
-  }
-  p.docx-num-2-1 {
-    counter-reset: docx-num-2-2;
-  }
-  p.docx-num-2-2:before {
-    content: "▪\9";
-    counter-increment: docx-num-2-2;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-2-2 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 108pt;
-  }
-  p.docx-num-2-2 {
-    counter-reset: docx-num-2-3;
-  }
-  p.docx-num-2-3:before {
-    content: "●\9";
-    counter-increment: docx-num-2-3;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-2-3 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 144pt;
-  }
-  p.docx-num-2-3 {
-    counter-reset: docx-num-2-4;
-  }
-  p.docx-num-2-4:before {
-    content: "o\9";
-    counter-increment: docx-num-2-4;
-    font-family: Courier New;
-  }
-  p.docx-num-2-4 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 180pt;
-  }
-  p.docx-num-2-4 {
-    counter-reset: docx-num-2-5;
-  }
-  p.docx-num-2-5:before {
-    content: "▪\9";
-    counter-increment: docx-num-2-5;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-2-5 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 216pt;
-  }
-  p.docx-num-2-5 {
-    counter-reset: docx-num-2-6;
-  }
-  p.docx-num-2-6:before {
-    content: "●\9";
-    counter-increment: docx-num-2-6;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-2-6 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 252pt;
-  }
-  p.docx-num-2-6 {
-    counter-reset: docx-num-2-7;
-  }
-  p.docx-num-2-7:before {
-    content: "o\9";
-    counter-increment: docx-num-2-7;
-    font-family: Courier New;
-  }
-  p.docx-num-2-7 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 288pt;
-  }
-  p.docx-num-2-7 {
-    counter-reset: docx-num-2-8;
-  }
-  p.docx-num-2-8:before {
-    content: "▪\9";
-    counter-increment: docx-num-2-8;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-2-8 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 324pt;
-  }
-  p.docx-num-3-0:before {
-    content: "●\9";
-    counter-increment: docx-num-3-0;
-    font-family: Noto Sans Symbols;
-    color: #7e0024;
-    min-height: 11pt;
-    font-size: 11pt;
-  }
-  p.docx-num-3-0 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 36pt;
-  }
-  p.docx-num-3-0 {
-    counter-reset: docx-num-3-1;
-  }
-  p.docx-num-3-1:before {
-    content: "o\9";
-    counter-increment: docx-num-3-1;
-    font-family: Courier New;
-  }
-  p.docx-num-3-1 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 72pt;
-  }
-  p.docx-num-3-1 {
-    counter-reset: docx-num-3-2;
-  }
-  p.docx-num-3-2:before {
-    content: "▪\9";
-    counter-increment: docx-num-3-2;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-3-2 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 108pt;
-  }
-  p.docx-num-3-2 {
-    counter-reset: docx-num-3-3;
-  }
-  p.docx-num-3-3:before {
-    content: "●\9";
-    counter-increment: docx-num-3-3;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-3-3 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 144pt;
-  }
-  p.docx-num-3-3 {
-    counter-reset: docx-num-3-4;
-  }
-  p.docx-num-3-4:before {
-    content: "o\9";
-    counter-increment: docx-num-3-4;
-    font-family: Courier New;
-  }
-  p.docx-num-3-4 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 180pt;
-  }
-  p.docx-num-3-4 {
-    counter-reset: docx-num-3-5;
-  }
-  p.docx-num-3-5:before {
-    content: "▪\9";
-    counter-increment: docx-num-3-5;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-3-5 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 216pt;
-  }
-  p.docx-num-3-5 {
-    counter-reset: docx-num-3-6;
-  }
-  p.docx-num-3-6:before {
-    content: "●\9";
-    counter-increment: docx-num-3-6;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-3-6 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 252pt;
-  }
-  p.docx-num-3-6 {
-    counter-reset: docx-num-3-7;
-  }
-  p.docx-num-3-7:before {
-    content: "o\9";
-    counter-increment: docx-num-3-7;
-    font-family: Courier New;
-  }
-  p.docx-num-3-7 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 288pt;
-  }
-  p.docx-num-3-7 {
-    counter-reset: docx-num-3-8;
-  }
-  p.docx-num-3-8:before {
-    content: "▪\9";
-    counter-increment: docx-num-3-8;
-    font-family: Noto Sans Symbols;
-  }
-  p.docx-num-3-8 {
-    display: list-item;
-    list-style-position: inside;
-    list-style-type: none;
-    text-indent: -18pt;
-    margin-left: 324pt;
-  }
-  .docx-wrapper {
-    counter-reset: docx-num-1-0 docx-num-2-0 docx-num-3-0;
-  }
-</style>
-<div class="docx-wrapper">
-  <section
-    class="docx"
-    style="padding: 72pt; width: 595.45pt; min-height: 841.7pt"
-  >
-    <article>
-      <p><span></span></p>
-      <table
-        class="no-vband docx_table1"
-        style="width: 492.75pt; text-align: left; table-layout: auto"
-      >
-        <colgroup>
-          <col style="width: 169.9pt" />
-          <col style="width: 322.85pt" />
-        </colgroup>
-        <tr>
-          <td
-            colspan="2"
-            style="
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-              vertical-align: bottom;
-            "
-          >
-            <p style="margin-bottom: 15px; line-height: 1; text-align: center">
-              <span
-                style="
-                  font-family: Cambria;
-                  font-weight: bold;
-                  min-height: 18pt;
-                  font-size: 18pt;
-                "
-                >Programação da reunião do meio de semana</span
-              >
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td
-            style="
-              border-top: none;
-              border-bottom: 2.25pt solid rgb(87, 90, 93);
-              vertical-align: bottom;
-              border-left: none;
-              border-right: none;
-            "
-          >
-            <div style="margin-bottom: 3px;">
-              <input value="Congregação" type="text" textBold fnt16>
-            </div>
-            
-          </td>
-          <td
-            style="
-              border-top: none;
-              border-bottom: 2.25pt solid rgb(87, 90, 93);
-              vertical-align: bottom;
-              border-left: none;
-              border-right: none;
-            "
-          >
-            <p style="margin-bottom: 3pt; line-height: 1; text-align: right">
-              <span></span>
-            </p>
-          </td>
-        </tr>
-      </table>
-      <p style="line-height: 1"><span></span></p>
-      <table
-        class="no-vband docx_table2"
-        style="width: 510.55pt; text-align: left; table-layout: auto"
-      >
-        <colgroup>
-          <col style="width: 256.55pt" />
-          <col style="width: 128.7pt" />
-          <col style="width: 125.3pt" />
-        </colgroup>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span style="font-weight: bold"
-                ><input value="DATA" type="text" textBold> | <input value="LEITURA SEMANAL DA BÍBLIA" type="text" textBold></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Presidente:</span
-              >
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right"><span></span></p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Conselheiro da sala B:</span
-              >
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-      </table>
-      <p style="line-height: 1"><span></span></p>
-      <table
-        class="no-vband docx_table3"
-        style="width: 511.5pt; text-align: left; table-layout: auto"
-      >
-        <colgroup>
-          <col style="width: 31.6pt" />
-          <col style="width: 227.6pt" />
-          <col style="width: 127pt" />
-          <col style="width: 125.3pt" />
-        </colgroup>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p
-              class="docx-num-1-0"
-              style="line-height: 1; text-indent: -6.55pt; margin-left: 1px"
-            >
-            <span>Cântico <input value="Número" type="text"></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Oração:</span
-              >
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p
-              class="docx-num-1-0"
-              style="line-height: 1; text-indent: -6.65pt; margin-left: 1px"
-            >
-              <span>Comentários iniciais</span
-              ><span style="min-height: 10pt; font-size: 10pt"> (1 min)</span
-              ><span></span>
-            </p>
-          </td>
-        </tr>
-      </table>
-      <p style="line-height: 1"><span></span></p>
-      <table
-        class="no-vband docx_table4"
-        style="width: 512.5pt; text-align: left; table-layout: auto"
-      >
-        <colgroup>
-          <col style="width: 31.5pt" />
-          <col style="width: 0.75pt" />
-          <col style="width: 169.35pt" />
-          <col style="width: 55.45pt" />
-          <col style="width: 0.3pt" />
-          <col style="width: 128.7pt" />
-          <col style="width: 125.25pt" />
-          <col style="width: 1.2pt" />
-        </colgroup>
-        <tr style="height: 14.4pt">
-          <td
-            colspan="5"
-            style="
-              background-color: rgb(87, 90, 93);
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(255, 255, 255);
-                  min-height: 10pt;
-                  font-size: 10pt;
-                "
-                >TESOUROS DA PALAVRA DE DEUS</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: bottom;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Sala B</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: bottom;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Salão principal</span
-              ><span></span>
-            </p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="4"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-1-0" style="line-height: 1; margin-left: 7.2pt">
-              <span><input value="Tema" type="text"></span
-              ><span style="min-height: 10pt; font-size: 10pt"> (10 min)</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="4"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-1-0" style="line-height: 1; margin-left: 7.1pt">
-              <span>Joias espirituais</span
-              ><span style="min-height: 10pt; font-size: 10pt"> (10 min)</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p
-              class="docx-num-1-0"
-              style="line-height: 1; text-indent: -6.55pt; margin-left: -5px"
-            >
-              <span>Leitura da Bíblia</span
-              ><span style="min-height: 10pt; font-size: 10pt"> (4 min)</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Estudante:</span
-              >
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-      </table>
-      <p style="line-height: 1"><span></span></p>
-      <table
-        class="no-vband docx_table5"
-        style="width: 510.55pt; text-align: left; table-layout: auto"
-      >
-        <colgroup>
-          <col style="width: 30.05pt" />
-          <col style="width: 138.3pt" />
-          <col style="width: 88.9pt" />
-          <col style="width: 128.7pt" />
-          <col style="width: 0.3pt" />
-          <col style="width: 123.2pt" />
-          <col style="width: 1.1pt" />
-        </colgroup>
-        <tr style="height: 14.4pt">
-          <td
-            colspan="3"
-            style="
-              background-color: rgb(190, 137, 0);
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(255, 255, 255);
-                  min-height: 10pt;
-                  font-size: 10pt;
-                "
-                >FAÇA SEU MELHOR NO MINISTÉRIO</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: bottom;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Sala B</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: bottom;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Salão principal</span
-              ><span></span>
-            </p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-2-0" style="line-height: 1; margin-left: 7.2pt">
-              <span><input value="Tema" type="text"></span
-              ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right"><span></span></p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span><input value="Conselheiro" type="text"></span><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Presidente" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-2-0" style="line-height: 1; margin-left: 7.2pt">
-              <span><input value="Tema" type="text"></span
-              ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Estudante/ajudante:</span
-              >
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span><span></span></p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-2-0" style="line-height: 1; margin-left: 7.2pt">
-              <span><input value="Tema" type="text"></span
-              ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Estudante/ajudante:</span
-              >
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span><span></span></p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span></p>
-          </td>
-        </tr>
-      </table>
-      <p style="line-height: 1"><span></span></p>
-      <table
-        class="no-vband docx_table6"
-        style="width: 513.35pt; text-align: left; table-layout: auto"
-      >
-        <colgroup>
-          <col style="width: 31.3pt" />
-          <col style="width: 225.6pt" />
-          <col style="width: 0.45pt" />
-          <col style="width: 128.35pt" />
-          <col style="width: 124.95pt" />
-          <col style="width: 0.45pt" />
-          <col style="width: 2.3pt" />
-        </colgroup>
-        <tr style="height: 14.4pt">
-          <td
-            colspan="3"
-            style="
-              background-color: rgb(126, 0, 36);
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(255, 255, 255);
-                  min-height: 10pt;
-                  font-size: 10pt;
-                "
-                >NOSSA VIDA CRISTÃ</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-              <span>Cântico <input value="Número" type="text"></span>
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-              <span><input value="Tema" type="text"></span
-              ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-              <span><input value="Tema" type="text"></span
-              ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-              <span>Estudo bíblico de congregação</span
-              ><span style="min-height: 10pt; font-size: 10pt"> (30 min)</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Dirigente/leitor:</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-              <span>Comentários finais</span
-              ><span style="min-height: 10pt; font-size: 10pt"> (3 min)</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span></span></p>
-          </td>
-        </tr>
-        <tr style="height: 14.4pt">
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 9pt;
-                  font-size: 9pt;
-                "
-                ><input value="0:00" type="text" fnt10></span
-              >
-            </p>
-          </td>
-          <td
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-              <span>Cântico <input value="Número" type="text"></span>
-            </p>
-          </td>
-          <td
-            colspan="2"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1; text-align: right">
-              <span
-                style="
-                  font-weight: bold;
-                  color: rgb(87, 90, 93);
-                  min-height: 8pt;
-                  font-size: 8pt;
-                "
-                >Oração:</span
-              ><span></span>
-            </p>
-          </td>
-          <td
-            colspan="3"
-            style="
-              vertical-align: middle;
-              border-width: initial;
-              border-style: none;
-              border-color: initial;
-            "
-          >
-            <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-          </td>
-        </tr>
-      </table>
-      <p style="line-height: 0.75"><span></span></p>
-      <table
-        class="no-vband docx_table7"
-        style="width: 512.25pt; text-align: left; table-layout: auto"
-      >
-      <table
-      class="no-vband docx_table1"
-      style="width: 492.75pt; text-align: left; table-layout: auto"
-    >
-      <colgroup>
-        <col style="width: 169.9pt" />
-        <col style="width: 322.85pt" />
-      </colgroup>
-    </table>
-    <p style="line-height: 1"><span></span></p>
-    <table
-      class="no-vband docx_table2"
-      style="width: 510.55pt; text-align: left; table-layout: auto"
-    >
-      <colgroup>
-        <col style="width: 256.55pt" />
-        <col style="width: 128.7pt" />
-        <col style="width: 125.3pt" />
-      </colgroup>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span style="font-weight: bold"
-              ><input value="DATA" type="text" textBold> | <input value="LEITURA SEMANAL DA BÍBLIA" type="text" textBold></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Presidente:</span
-            >
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right"><span></span></p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Conselheiro da sala B:</span
-            >
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-    </table>
-    <p style="line-height: 1"><span></span></p>
-    <table
-      class="no-vband docx_table3"
-      style="width: 511.5pt; text-align: left; table-layout: auto"
-    >
-      <colgroup>
-        <col style="width: 31.6pt" />
-        <col style="width: 227.6pt" />
-        <col style="width: 127pt" />
-        <col style="width: 125.3pt" />
-      </colgroup>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p
-            class="docx-num-1-0"
-            style="line-height: 1; text-indent: -6.55pt; margin-left: 1px"
-          >
-          <span>Cântico <input value="Número" type="text"></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Oração:</span
-            >
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p
-            class="docx-num-1-0"
-            style="line-height: 1; text-indent: -6.65pt; margin-left: 1px"
-          >
-            <span>Comentários iniciais</span
-            ><span style="min-height: 10pt; font-size: 10pt"> (1 min)</span
-            ><span></span>
-          </p>
-        </td>
-      </tr>
-    </table>
-    <p style="line-height: 1"><span></span></p>
-    <table
-      class="no-vband docx_table4"
-      style="width: 512.5pt; text-align: left; table-layout: auto"
-    >
-      <colgroup>
-        <col style="width: 31.5pt" />
-        <col style="width: 0.75pt" />
-        <col style="width: 169.35pt" />
-        <col style="width: 55.45pt" />
-        <col style="width: 0.3pt" />
-        <col style="width: 128.7pt" />
-        <col style="width: 125.25pt" />
-        <col style="width: 1.2pt" />
-      </colgroup>
-      <tr style="height: 14.4pt">
-        <td
-          colspan="5"
-          style="
-            background-color: rgb(87, 90, 93);
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(255, 255, 255);
-                min-height: 10pt;
-                font-size: 10pt;
-              "
-              >TESOUROS DA PALAVRA DE DEUS</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: bottom;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Sala B</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: bottom;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Salão principal</span
-            ><span></span>
-          </p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="4"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-1-0" style="line-height: 1; margin-left: 7.2pt">
-            <span><input value="Tema" type="text"></span
-            ><span style="min-height: 10pt; font-size: 10pt"> (10 min)</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="4"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-1-0" style="line-height: 1; margin-left: 7.1pt">
-            <span>Joias espirituais</span
-            ><span style="min-height: 10pt; font-size: 10pt"> (10 min)</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p
-            class="docx-num-1-0"
-            style="line-height: 1; text-indent: -6.55pt; margin-left: -5px"
-          >
-            <span>Leitura da Bíblia</span
-            ><span style="min-height: 10pt; font-size: 10pt"> (4 min)</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Estudante:</span
-            >
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-    </table>
-    <p style="line-height: 1"><span></span></p>
-    <table
-      class="no-vband docx_table5"
-      style="width: 510.55pt; text-align: left; table-layout: auto"
-    >
-      <colgroup>
-        <col style="width: 30.05pt" />
-        <col style="width: 138.3pt" />
-        <col style="width: 88.9pt" />
-        <col style="width: 128.7pt" />
-        <col style="width: 0.3pt" />
-        <col style="width: 123.2pt" />
-        <col style="width: 1.1pt" />
-      </colgroup>
-      <tr style="height: 14.4pt">
-        <td
-          colspan="3"
-          style="
-            background-color: rgb(190, 137, 0);
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(255, 255, 255);
-                min-height: 10pt;
-                font-size: 10pt;
-              "
-              >FAÇA SEU MELHOR NO MINISTÉRIO</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: bottom;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Sala B</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: bottom;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Salão principal</span
-            ><span></span>
-          </p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-2-0" style="line-height: 1; margin-left: 7.2pt">
-            <span><input value="Tema" type="text"></span
-            ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right"><span></span></p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span><input value="Conselheiro" type="text"></span><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Presidente" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-2-0" style="line-height: 1; margin-left: 7.2pt">
-            <span><input value="Tema" type="text"></span
-            ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Estudante/ajudante:</span
-            >
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span><span></span></p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-2-0" style="line-height: 1; margin-left: 7.2pt">
-            <span><input value="Tema" type="text"></span
-            ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Estudante/ajudante:</span
-            >
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span><span></span></p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span></p>
-        </td>
-      </tr>
-    </table>
-    <p style="line-height: 1"><span></span></p>
-    <table
-      class="no-vband docx_table6"
-      style="width: 513.35pt; text-align: left; table-layout: auto"
-    >
-      <colgroup>
-        <col style="width: 31.3pt" />
-        <col style="width: 225.6pt" />
-        <col style="width: 0.45pt" />
-        <col style="width: 128.35pt" />
-        <col style="width: 124.95pt" />
-        <col style="width: 0.45pt" />
-        <col style="width: 2.3pt" />
-      </colgroup>
-      <tr style="height: 14.4pt">
-        <td
-          colspan="3"
-          style="
-            background-color: rgb(126, 0, 36);
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(255, 255, 255);
-                min-height: 10pt;
-                font-size: 10pt;
-              "
-              >NOSSA VIDA CRISTÃ</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-            <span>Cântico <input value="Número" type="text"></span>
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-            <span><input value="Tema" type="text"></span
-            ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-            <span><input value="Tema" type="text"></span
-            ><span style="min-height: 10pt; font-size: 10pt"><input value="(X min)" type="text"></span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-            <span>Estudo bíblico de congregação</span
-            ><span style="min-height: 10pt; font-size: 10pt"> (30 min)</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Dirigente/leitor:</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome/nome" type="text"></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-            <span>Comentários finais</span
-            ><span style="min-height: 10pt; font-size: 10pt"> (3 min)</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span></span></p>
-        </td>
-      </tr>
-      <tr style="height: 14.4pt">
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 9pt;
-                font-size: 9pt;
-              "
-              ><input value="0:00" type="text" fnt10></span
-            >
-          </p>
-        </td>
-        <td
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p class="docx-num-3-0" style="line-height: 1; margin-left: 7.2pt">
-            <span>Cântico <input value="Número" type="text"></span>
-          </p>
-        </td>
-        <td
-          colspan="2"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1; text-align: right">
-            <span
-              style="
-                font-weight: bold;
-                color: rgb(87, 90, 93);
-                min-height: 8pt;
-                font-size: 8pt;
-              "
-              >Oração:</span
-            ><span></span>
-          </p>
-        </td>
-        <td
-          colspan="3"
-          style="
-            vertical-align: middle;
-            border-width: initial;
-            border-style: none;
-            border-color: initial;
-          "
-        >
-          <p style="line-height: 1"><span><input value="Nome" type="text"></span></p>
-        </td>
-      </tr>
-    </table>
-    <p style="line-height: 0.75"><span></span></p>
-    <table
-      class="no-vband docx_table7"
-      style="width: 512.25pt; text-align: left; table-layout: auto"
-    > 
-  </section>
-</div>
+    <div class="container">
+        
+        <!-- SEMANA 1 -->
 
-<script> 
-    const meuTexto = document.querySelectorAll("input");
+        <h1>Programação da reunião do meio de semana</h1>
+        <div class="box">
+            <input type="text" value="Congregação" txtBold>
+        </div>
+        <hr>
+        
+        <main>
+            <!-- SEMANA 1 -->
+            <div class="semana">
+                <section>
+                    <div class="box">
+                        <input type="text" value="DATA | LEITURA DA BÍBLIA SEMANAL" txtBold fnt12>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="19:30"> 
+                        <ul>
+                            <li>
+                                <span txtBold>Cântico</span> 
+                                <input type="text" value="Número" txtBold>
+                            </li>
+                        </ul>                  
+                    </div>
+                    <div class="list">
+                        <input type="text" value="19:35" inputNoMargin> 
+                        <ul>
+                            <li>
+                                <span txtBold inputNoMargin>Comentários iniciais</span> 
+                                <span txtBold inputNoMargin>(1 min)</span> 
+                            </li>
+                        </ul>  
+                    </div>
+
+                    <!-- TESOUROS DA PALAVRA DE DEUS -->
+                    <h2 class="subtitle bg-grey">TESOUROS DA PALAVRA DE DEUS</h2>
+                    <div class="list">
+                        <input type="text" value="19:36" inputNoMargin> 
+                        <ul>
+                            <li>
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <span txtBold inputNoMargin>(10 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="19:46" inputNoMargin> 
+                        <ul>
+                            <li>
+                                <span txtBold inputNoMargin>Joias espirituais</span>
+                                <span txtBold inputNoMargin>(10 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="19:56" inputNoMargin> 
+                        <ul>
+                            <li>
+                                <span txtBold inputNoMargin>Leitura da Bíblia</span>
+                                <span txtBold inputNoMargin>(4 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- FAÇA SEU MELHOR NO MINISTÉRIO -->
+                    <h2 class="subtitle bg-darkgoldenrod">FAÇA SEU MELHOR NO MINISTÉRIO</h2>
+                    <div class="list">
+                        <input type="text" value="20:00" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkred">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:06" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkred">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:10" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkred">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- NOSSA VIDA CRISTÃ -->
+                    <h2 class="subtitle bg-darkred">NOSSA VIDA CRISTÃ</h2>    
+                    <div class="list">
+                        <input type="text" value="20:15" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <span txtBold>Cântico</span> 
+                                <input type="text" value="Número" txtBold inputNoMargin>
+                            </li>
+                        </ul>                  
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:20" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:30" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:36" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <span txtBold inputNoMargin>Estudo bíblico de congregação</span>
+                                <span txtBold inputNoMargin>(30 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="21:06" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <span txtBold inputNoMargin>Comentários finais</span>
+                                <span txtBold inputNoMargin>(3 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="21:10" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <span txtBold>Cântico</span> 
+                                <input type="text" value="Número" txtBold inputNoMargin>
+                            </li>
+                        </ul>                  
+                    </div>
+
+                </section>
+
+                <section>
+                    <div class="box column-two-margin">
+                        <span class="label" txtBold>Presidente: </span>
+                        <input type="text" value="Nome" txtBold>
+                    </div>
+                    <div class="box column-two-margin">
+                        <span class="label" txtBold>Oração: </span>
+                        <input type="text" value="Nome" txtBold>
+                    </div>
+                    <div style="margin-top: 55px" class="box column-two-margin">
+                        <span  class="label" txtBold>Salão principal </span> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> 
+                    </div>
+                    <div style="margin-top: 32px" class="box column-two-margin">
+                        <span  class="label" txtBold>Salão principal </span> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> 
+                    </div>
+                    <div style="margin-top: 70px" class="box column-two-margin">
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <span style="margin-left: -108px" class="label" txtBold>Dirigente/leitor:</span>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <span  style="margin-left: -58px" class="label" txtBold>Oração:</span>
+                        <input type="text" value="Nome" txtBold inputNoMargin> 
+                    </div>
+                </section>
+            </div>
+
+            <!-- SEMANA 2 -->
+            <div class="semana">
+                <section>
+                    <div class="box">
+                        <input type="text" value="DATA | LEITURA DA BÍBLIA SEMANAL" txtBold fnt12>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="19:30"> 
+                        <ul>
+                            <li>
+                                <span txtBold>Cântico</span> 
+                                <input type="text" value="Número" txtBold>
+                            </li>
+                        </ul>                  
+                    </div>
+                    <div class="list">
+                        <input type="text" value="19:35" inputNoMargin> 
+                        <ul>
+                            <li>
+                                <span txtBold inputNoMargin>Comentários iniciais</span> 
+                                <span txtBold inputNoMargin>(1 min)</span> 
+                            </li>
+                        </ul>  
+                    </div>
+
+                    <!-- TESOUROS DA PALAVRA DE DEUS -->
+                    <h2 class="subtitle bg-grey">TESOUROS DA PALAVRA DE DEUS</h2>
+                    <div class="list">
+                        <input type="text" value="19:36" inputNoMargin> 
+                        <ul>
+                            <li>
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <span txtBold inputNoMargin>(10 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="19:46" inputNoMargin> 
+                        <ul>
+                            <li>
+                                <span txtBold inputNoMargin>Joias espirituais</span>
+                                <span txtBold inputNoMargin>(10 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="19:56" inputNoMargin> 
+                        <ul>
+                            <li>
+                                <span txtBold inputNoMargin>Leitura da Bíblia</span>
+                                <span txtBold inputNoMargin>(4 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- FAÇA SEU MELHOR NO MINISTÉRIO -->
+                    <h2 class="subtitle bg-darkgoldenrod">FAÇA SEU MELHOR NO MINISTÉRIO</h2>
+                    <div class="list">
+                        <input type="text" value="20:00" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkred">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:06" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkred">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:10" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkred">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- NOSSA VIDA CRISTÃ -->
+                    <h2 class="subtitle bg-darkred">NOSSA VIDA CRISTÃ</h2>    
+                    <div class="list">
+                        <input type="text" value="20:15" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <span txtBold>Cântico</span> 
+                                <input type="text" value="Número" txtBold inputNoMargin>
+                            </li>
+                        </ul>                  
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:20" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:30" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <input value="Tema" txtBold inputNoMargin> 
+                                <input type="text" value="(X min)" txtBold inputNoMargin>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="20:36" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <span txtBold inputNoMargin>Estudo bíblico de congregação</span>
+                                <span txtBold inputNoMargin>(30 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="21:06" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <span txtBold inputNoMargin>Comentários finais</span>
+                                <span txtBold inputNoMargin>(3 min)</span> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <input type="text" value="21:10" inputNoMargin> 
+                        <ul>
+                            <li class="color-darkgoldenrod">
+                                <span txtBold>Cântico</span> 
+                                <input type="text" value="Número" txtBold inputNoMargin>
+                            </li>
+                        </ul>                  
+                    </div>
+
+                </section>
+
+                <section>
+                    <div class="box column-two-margin">
+                        <span class="label" txtBold>Presidente: </span>
+                        <input type="text" value="Nome" txtBold>
+                    </div>
+                    <div class="box column-two-margin">
+                        <span class="label" txtBold>Oração: </span>
+                        <input type="text" value="Nome" txtBold>
+                    </div>
+                    <div style="margin-top: 55px" class="box column-two-margin">
+                        <span  class="label" txtBold>Salão principal </span> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> 
+                    </div>
+                    <div style="margin-top: 32px" class="box column-two-margin">
+                        <span  class="label" txtBold>Salão principal </span> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> 
+                    </div>
+                    <div style="margin-top: 70px" class="box column-two-margin">
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <span style="margin-left: -108px" class="label" txtBold>Dirigente/leitor:</span>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                        <span  style="margin-left: -58px" class="label" txtBold>Oração:</span>
+                        <input type="text" value="Nome" txtBold inputNoMargin> 
+                    </div>
+                </section>
+            </div>
+
+        </main>
+    </div>
+    
+    
+    <script> 
+        const meuTexto = document.querySelectorAll("input");
         const inputs = Array.from(meuTexto);
 
-        inputs.map(input => input.style.width = (input.value.length + 0.8) * 8 + 'px')
+        inputs.map(input => input.setAttribute("size", input.value.trim().length  + "px"));
         inputs.map(input => input.addEventListener('input', function () {
-          this.style.width = (this.value.length + 0.8) * 8 + 'px';
+            this.setAttribute("size", this.value.replace(/\s+/g, "").length + (this.value.match(/ /g) || []).length / 1.6 + "px");
         }));
-
-</script>
+        
+    </script>
 </body>
+</html>
