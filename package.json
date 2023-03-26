@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "browser-sync": "^2.29.1"
+  },
+  "scripts": {
+    "start": "browser-sync start --server --files \"**/*\""
+  }
+
+}
