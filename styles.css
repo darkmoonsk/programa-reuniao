@@ -159,3 +159,31 @@ ul li.color-darkgoldenrod::before {
     color: white;
     background-color: rgb(100, 0, 0);
 }
+
+button {
+    width: 200px;
+    height: 50px;
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px #000;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #f0f0f0;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+@media print {
+    #btn {
+        display: none;
+    }
+}

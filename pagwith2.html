@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Editor</title>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -350,9 +351,26 @@
             </div>
 
         </main>
+
+        <div style="display: flex; justify-content: center">
+            <button id="btn" onclick="window.print()" >Gerar PDF</button>
+        </div>
+
     </div>
     
-    
     <script src="./script.js"></script>
+
+    <script>
+        const { jsPDF } = window.jspdf.jsPDF;
+
+        function generatePDF(){          
+            const pdf = new jsPDF();
+            pdf.fromHTML(document.body, {
+                callback: function (pdf) {
+                    pdf.save("programação-da-reunião.pdf")
+                }
+            });
+        }
+    </script>
 </body>
 </html>
