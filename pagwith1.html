@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <title>Editor</title>
 </head>
 <body>
@@ -115,7 +114,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="list">
+                    <div id="tema-semana1" class="list">
                         <input type="text" value="20:30" inputNoMargin> 
                         <ul>
                             <li class="color-darkgoldenrod">
@@ -172,8 +171,8 @@
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
                         <input type="text" value="Nome" txtBold inputNoMargin> 
                     </div>
-                    <div style="margin-top: 70px" class="box column-two-margin">
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                    <div style="margin-top: 60px" class="box column-two-margin">
+                        <input id="name-to-quit1" type="text" value="Nome" txtBold inputNoMargin> <br>
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
                         <span style="margin-left: -108px" class="label" txtBold>Dirigente/leitor:</span>
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
@@ -183,27 +182,23 @@
                     </div>
                 </section>
             </div>
+            <div style="display: flex; justify-content: center;">
+                <button id="btn-delete1" class="btn-deletetema">Retirar/Colocar um tema de Nossa Vida Cristã Semana 1</button>
+            </div>
+            <div style="display: flex; justify-content: center; display: none;">
+                <button id="btn-delete2" class="btn-deletetema">Retirar/Colocar um tema de Nossa Vida Cristã Semana 1</button>
+            </div>
+
 
         </main>
 
         <div style="display: flex; justify-content: center">
-            <button id="btn">Gerar PDF</button>
+            <button id="btn" class="btn-genpdf" onclick="window.print()" >Gerar PDF</button>
         </div>
+
+
     </div>
     
-    <script type="module" src="./script.js"></script>
-
-    <script>
-        const btnGeneratePDF = document.querySelector("#btn");
-
-        btnGeneratePDF.addEventListener("click", function (){
-            const pdf = new jsPDF();
-            pdf.html(document.body, {
-                callback: function (pdf) {
-                    pdf.save("programação-da-reunião.pdf")
-                }
-            });
-        });
-    </script>
+    <script src="./script.js"></script>
 </body>
 </html>

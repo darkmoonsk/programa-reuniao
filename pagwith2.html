@@ -115,7 +115,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="list">
+                    <div id="tema-semana1" class="list">
                         <input type="text" value="20:30" inputNoMargin> 
                         <ul>
                             <li class="color-darkgoldenrod">
@@ -172,8 +172,8 @@
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
                         <input type="text" value="Nome" txtBold inputNoMargin> 
                     </div>
-                    <div style="margin-top: 70px" class="box column-two-margin">
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                    <div style="margin-top: 60px" class="box column-two-margin">
+                        <input id="name-to-quit1" type="text" value="Nome" txtBold inputNoMargin> <br>
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
                         <span style="margin-left: -108px" class="label" txtBold>Dirigente/leitor:</span>
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
@@ -182,6 +182,10 @@
                         <input type="text" value="Nome" txtBold inputNoMargin> 
                     </div>
                 </section>
+            </div>
+
+            <div style="display: flex; justify-content: center;">
+                <button id="btn-delete1" class="btn-deletetema" >Retirar/Colocar um tema de Nossa Vida Cristã Semana 1</button>
             </div>
 
             <!-- SEMANA 2 -->
@@ -281,7 +285,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="list">
+                    <div id="tema-semana2" class="list">
                         <input type="text" value="20:30" inputNoMargin> 
                         <ul>
                             <li class="color-darkgoldenrod">
@@ -338,8 +342,8 @@
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
                         <input type="text" value="Nome" txtBold inputNoMargin> 
                     </div>
-                    <div style="margin-top: 70px" class="box column-two-margin">
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
+                    <div style="margin-top: 60px" class="box column-two-margin">
+                        <input id="name-to-quit2" type="text" value="Nome" txtBold inputNoMargin> <br>
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
                         <span style="margin-left: -108px" class="label" txtBold>Dirigente/leitor:</span>
                         <input type="text" value="Nome" txtBold inputNoMargin> <br>
@@ -349,11 +353,14 @@
                     </div>
                 </section>
             </div>
+            <div style="display: flex; justify-content: center;">
+                <button id="btn-delete2" class="btn-deletetema">Retirar/Colocar um tema de Nossa Vida Cristã Semana 2</button>
+            </div>
 
         </main>
 
         <div style="display: flex; justify-content: center">
-            <button id="btn" onclick="window.print()" >Gerar PDF</button>
+            <button id="btn" class="btn-genpdf" onclick="window.print()" >Gerar PDF</button>
         </div>
 
     </div>
