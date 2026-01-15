@@ -1,383 +1,528 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Editor</title>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
+      <h1>Programação da reunião do meio de semana</h1>
+      <div class="box">
+        <input type="text" value="Congregação" txtBold />
+      </div>
+      <hr />
 
-        <h1>Programação da reunião do meio de semana</h1>
-        <div class="box">
-            <input type="text" value="Congregação" txtBold>
+      <main>
+        <!-- SEMANA 1 -->
+        <div class="semana">
+          <section>
+            <div class="box">
+              <input
+                type="text"
+                value="DATA | LEITURA DA BÍBLIA SEMANAL"
+                txtBold
+                fnt12
+              />
+            </div>
+            <div class="list">
+              <input type="text" value="19:30" />
+              <ul>
+                <li>
+                  <span txtBold>Cântico</span>
+                  <input type="text" value="Número" txtBold />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="19:35" inputNoMargin />
+              <ul>
+                <li>
+                  <span txtBold inputNoMargin
+                    >Comentários iniciais (1 min)</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- TESOUROS DA PALAVRA DE DEUS -->
+            <h2 class="subtitle bg-grey">TESOUROS DA PALAVRA DE DEUS</h2>
+            <div class="list">
+              <input type="text" value="19:36" inputNoMargin />
+              <ul>
+                <li>
+                  <input value="Tema  (10 min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="19:46" inputNoMargin />
+              <ul>
+                <li>
+                  <span txtBold inputNoMargin>Joias espirituais (10 min</span>
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="19:56" inputNoMargin />
+              <ul>
+                <li>
+                  <span txtBold inputNoMargin>Leitura da Bíblia (4 min)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- FAÇA SEU MELHOR NO MINISTÉRIO -->
+            <h2 class="subtitle bg-darkgoldenrod">
+              FAÇA SEU MELHOR NO MINISTÉRIO
+            </h2>
+            <div class="list">
+              <input type="text" value="20:00" inputNoMargin />
+              <ul>
+                <li class="color-darkred">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="20:06" inputNoMargin />
+              <ul>
+                <li class="color-darkred">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="20:10" inputNoMargin />
+              <ul>
+                <li class="color-darkred">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div id="tema-ministerio-semana1" class="list hidden">
+              <input type="text" value="20:14" inputNoMargin />
+              <ul>
+                <li class="color-darkred">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div
+              style="display: flex; justify-content: center; margin-top: 10px"
+            >
+              <button id="btn-ministerio-semana1" class="btn-deletetema">
+                Inserir/Remover um tema de Faça Seu Melhor no Ministério Semana
+                1
+              </button>
+            </div>
+
+            <!-- NOSSA VIDA CRISTÃ -->
+            <h2 class="subtitle bg-darkred">NOSSA VIDA CRISTÃ</h2>
+            <div class="list">
+              <input type="text" value="20:15" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <span txtBold>Cântico</span>
+                  <input type="text" value="Número" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="20:20" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div id="tema-semana1" class="list">
+              <input type="text" value="20:30" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="20:36" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <span txtBold inputNoMargin
+                    >Estudo bíblico de congregação (30 min)</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="21:06" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <span txtBold inputNoMargin>Comentários finais (3 min)</span>
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="21:10" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <span txtBold>Cântico</span>
+                  <input type="text" value="Número" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section>
+            <div style="display: flex; transform: translateX(-100px)">
+              <div class="box column-two-margin">
+                <span class="label" txtBold>Presidente: </span>
+                <input type="text" value="Nome" txtBold />
+              </div>
+              <div class="box">
+                <span class="label" txtBold>Sala B: </span>
+                <input type="text" value="Nome" txtBold />
+              </div>
+            </div>
+            <div class="box column-two-margin">
+              <span class="label" txtBold>Oração: </span>
+              <input type="text" value="Nome" txtBold />
+            </div>
+            <div
+              style="margin-top: 55px; display: flex; gap: 20px"
+              class="column-two-margin"
+            >
+              <div class="box">
+                <span class="label" txtBold>Salão principal </span> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin />
+              </div>
+              <div class="box">
+                <span class="label" txtBold>Sala Adicional </span> <br />
+                <input type="text" value="" txtBold inputNoMargin /> <br />
+                <input type="text" value="" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin />
+              </div>
+            </div>
+            <div
+              style="margin-top: 32px; display: flex; gap: 20px"
+              class="column-two-margin"
+            >
+              <div class="box">
+                <span class="label" txtBold>Salão principal </span> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin />
+                <div id="nome-ministerio-semana1-sp" class="hidden">
+                  <input type="text" value="Nome" txtBold inputNoMargin />
+                </div>
+              </div>
+              <div class="box">
+                <span class="label" txtBold>Sala Adicional </span> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin />
+                <div id="nome-ministerio-semana1-sa" class="hidden">
+                  <input type="text" value="Nome" txtBold inputNoMargin />
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 60px" class="box column-two-margin">
+              <input
+                id="name-to-quit1"
+                type="text"
+                value="Nome"
+                txtBold
+                inputNoMargin
+              />
+              <br />
+              <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+              <span style="margin-left: -108px" class="label" txtBold
+                >Dirigente/leitor:</span
+              >
+              <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+              <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+              <span style="margin-left: -58px" class="label" txtBold
+                >Oração:</span
+              >
+              <input type="text" value="Nome" txtBold inputNoMargin />
+            </div>
+          </section>
         </div>
-        <hr>
-        
-        <main>
-            <!-- SEMANA 1 -->
-            <div class="semana">
-                <section>
-                    <div class="box">
-                        <input type="text" value="DATA | LEITURA DA BÍBLIA SEMANAL" txtBold fnt12>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="19:30"> 
-                        <ul>
-                            <li>
-                                <span txtBold>Cântico</span> 
-                                <input type="text" value="Número" txtBold>
-                            </li>
-                        </ul>                  
-                    </div>
-                    <div class="list">
-                        <input type="text" value="19:35" inputNoMargin> 
-                        <ul>
-                            <li>
-                                <span txtBold inputNoMargin>Comentários iniciais (1 min)</span> 
-                            </li>
-                        </ul>  
-                    </div>
-
-                    <!-- TESOUROS DA PALAVRA DE DEUS -->
-                    <h2 class="subtitle bg-grey">TESOUROS DA PALAVRA DE DEUS</h2>
-                    <div class="list">
-                        <input type="text" value="19:36" inputNoMargin> 
-                        <ul>
-                            <li>
-                                <input value="Tema  (10 min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="19:46" inputNoMargin> 
-                        <ul>
-                            <li>
-                                <span txtBold inputNoMargin>Joias espirituais (10 min</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="19:56" inputNoMargin> 
-                        <ul>
-                            <li>
-                                <span txtBold inputNoMargin>Leitura da Bíblia (4 min)</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- FAÇA SEU MELHOR NO MINISTÉRIO -->
-                    <h2 class="subtitle bg-darkgoldenrod">FAÇA SEU MELHOR NO MINISTÉRIO</h2>
-                    <div class="list">
-                        <input type="text" value="20:00" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkred">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="20:06" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkred">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="20:10" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkred">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- NOSSA VIDA CRISTÃ -->
-                    <h2 class="subtitle bg-darkred">NOSSA VIDA CRISTÃ</h2>    
-                    <div class="list">
-                        <input type="text" value="20:15" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <span txtBold>Cântico</span> 
-                                <input type="text" value="Número" txtBold inputNoMargin>
-                            </li>
-                        </ul>                  
-                    </div>
-                    <div class="list">
-                        <input type="text" value="20:20" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="tema-semana1" class="list">
-                        <input type="text" value="20:30" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="20:36" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <span txtBold inputNoMargin>Estudo bíblico de congregação (30 min)</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="21:06" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <span txtBold inputNoMargin>Comentários finais (3 min)</span>
-
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="21:10" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <span txtBold>Cântico</span> 
-                                <input type="text" value="Número" txtBold inputNoMargin>
-                            </li>
-                        </ul>                  
-                    </div>
-                </section>
-
-                <section>
-                    <div class="box column-two-margin">
-                        <span class="label" txtBold>Presidente: </span>
-                        <input type="text" value="Nome" txtBold>
-                    </div>
-                    <div class="box column-two-margin">
-                        <span class="label" txtBold>Oração: </span>
-                        <input type="text" value="Nome" txtBold>
-                    </div>
-                    <div style="margin-top: 55px" class="box column-two-margin">
-                        <span  class="label" txtBold>Salão principal </span> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> 
-                    </div>
-                    <div style="margin-top: 32px" class="box column-two-margin">
-                        <span  class="label" txtBold>Salão principal </span> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> 
-                    </div>
-                    <div style="margin-top: 60px" class="box column-two-margin">
-                        <input id="name-to-quit1" type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <span style="margin-left: -108px" class="label" txtBold>Dirigente/leitor:</span>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <span  style="margin-left: -58px" class="label" txtBold>Oração:</span>
-                        <input type="text" value="Nome" txtBold inputNoMargin> 
-                    </div>
-                </section>
-            </div>
-
-            <div style="display: flex; justify-content: center;">
-                <button id="btn-delete1" class="btn-deletetema" >Retirar/Colocar um tema de Nossa Vida Cristã Semana 1</button>
-            </div>
-
-            <!-- SEMANA 2 -->
-            <div class="semana">
-                <section>
-                    <div class="box">
-                        <input type="text" value="DATA | LEITURA DA BÍBLIA SEMANAL" txtBold fnt12>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="19:30"> 
-                        <ul>
-                            <li>
-                                <span txtBold>Cântico</span> 
-                                <input type="text" value="Número" txtBold>
-                            </li>
-                        </ul>                  
-                    </div>
-                    <div class="list">
-                        <input type="text" value="19:35" inputNoMargin> 
-                        <ul>
-                            <li>
-                                <span txtBold inputNoMargin>Comentários iniciais (1 min)</span>
-                            </li>
-                        </ul>  
-                    </div>
-
-                    <!-- TESOUROS DA PALAVRA DE DEUS -->
-                    <h2 class="subtitle bg-grey">TESOUROS DA PALAVRA DE DEUS</h2>
-                    <div class="list">
-                        <input type="text" value="19:36" inputNoMargin> 
-                        <ul>
-                            <li>
-                                <input value="Tema (10 min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="19:46" inputNoMargin> 
-                        <ul>
-                            <li>
-                                <span txtBold inputNoMargin>Joias espirituais (10 min)</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="19:56" inputNoMargin> 
-                        <ul>
-                            <li>
-                                <span txtBold inputNoMargin>Leitura da Bíblia (4 min)</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- FAÇA SEU MELHOR NO MINISTÉRIO -->
-                    <h2 class="subtitle bg-darkgoldenrod">FAÇA SEU MELHOR NO MINISTÉRIO</h2>
-                    <div class="list">
-                        <input type="text" value="20:00" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkred">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="20:06" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkred">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="20:10" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkred">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- NOSSA VIDA CRISTÃ -->
-                    <h2 class="subtitle bg-darkred">NOSSA VIDA CRISTÃ</h2>    
-                    <div class="list">
-                        <input type="text" value="20:15" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <span txtBold>Cântico</span> 
-                                <input type="text" value="Número" txtBold inputNoMargin>
-                            </li>
-                        </ul>                  
-                    </div>
-                    <div class="list">
-                        <input type="text" value="20:20" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="tema-semana2" class="list">
-                        <input type="text" value="20:30" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <input value="Tema (X min)" txtBold inputNoMargin> 
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="20:36" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <span txtBold inputNoMargin>Estudo bíblico de congregação (30 min)</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="21:06" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <span txtBold inputNoMargin>Comentários finais (3 min)</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list">
-                        <input type="text" value="21:10" inputNoMargin> 
-                        <ul>
-                            <li class="color-darkgoldenrod">
-                                <span txtBold>Cântico</span> 
-                                <input type="text" value="Número" txtBold inputNoMargin>
-                            </li>
-                        </ul>                  
-                    </div>
-
-                </section>
-
-                <section>
-                    <div class="box column-two-margin">
-                        <span class="label" txtBold>Presidente: </span>
-                        <input type="text" value="Nome" txtBold>
-                    </div>
-                    <div class="box column-two-margin">
-                        <span class="label" txtBold>Oração: </span>
-                        <input type="text" value="Nome" txtBold>
-                    </div>
-                    <div style="margin-top: 55px" class="box column-two-margin">
-                        <span  class="label" txtBold>Salão principal </span> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> 
-                    </div>
-                    <div style="margin-top: 32px" class="box column-two-margin">
-                        <span  class="label" txtBold>Salão principal </span> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> 
-                    </div>
-                    <div style="margin-top: 60px" class="box column-two-margin">
-                        <input id="name-to-quit2" type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <span style="margin-left: -108px" class="label" txtBold>Dirigente/leitor:</span>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <input type="text" value="Nome" txtBold inputNoMargin> <br>
-                        <span  style="margin-left: -58px" class="label" txtBold>Oração:</span>
-                        <input type="text" value="Nome" txtBold inputNoMargin> 
-                    </div>
-                </section>
-            </div>
-            <div style="display: flex; justify-content: center;">
-                <button id="btn-delete2" class="btn-deletetema">Retirar/Colocar um tema de Nossa Vida Cristã Semana 2</button>
-            </div>
-
-        </main>
 
         <div style="display: flex; justify-content: center">
-            <button id="btn" class="btn-genpdf" onclick="window.print()" >Gerar PDF</button>
+          <button id="btn-delete1" class="btn-deletetema">
+            Retirar/Colocar um tema de Nossa Vida Cristã Semana 1
+          </button>
         </div>
 
+        <!-- SEMANA 2 -->
+        <div class="semana">
+          <section>
+            <div class="box">
+              <input
+                type="text"
+                value="DATA | LEITURA DA BÍBLIA SEMANAL"
+                txtBold
+                fnt12
+              />
+            </div>
+            <div class="list">
+              <input type="text" value="19:30" />
+              <ul>
+                <li>
+                  <span txtBold>Cântico</span>
+                  <input type="text" value="Número" txtBold />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="19:35" inputNoMargin />
+              <ul>
+                <li>
+                  <span txtBold inputNoMargin
+                    >Comentários iniciais (1 min)</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- TESOUROS DA PALAVRA DE DEUS -->
+            <h2 class="subtitle bg-grey">TESOUROS DA PALAVRA DE DEUS</h2>
+            <div class="list">
+              <input type="text" value="19:36" inputNoMargin />
+              <ul>
+                <li>
+                  <input value="Tema (10 min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="19:46" inputNoMargin />
+              <ul>
+                <li>
+                  <span txtBold inputNoMargin>Joias espirituais (10 min)</span>
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="19:56" inputNoMargin />
+              <ul>
+                <li>
+                  <span txtBold inputNoMargin>Leitura da Bíblia (4 min)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- FAÇA SEU MELHOR NO MINISTÉRIO -->
+            <h2 class="subtitle bg-darkgoldenrod">
+              FAÇA SEU MELHOR NO MINISTÉRIO
+            </h2>
+            <div class="list">
+              <input type="text" value="20:00" inputNoMargin />
+              <ul>
+                <li class="color-darkred">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="20:06" inputNoMargin />
+              <ul>
+                <li class="color-darkred">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="20:10" inputNoMargin />
+              <ul>
+                <li class="color-darkred">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div id="tema-ministerio-semana2" class="list hidden">
+              <input type="text" value="20:14" inputNoMargin />
+              <ul>
+                <li class="color-darkred">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div
+              style="display: flex; justify-content: center; margin-top: 10px"
+            >
+              <button id="btn-ministerio-semana2" class="btn-deletetema">
+                Inserir/Remover um tema de Faça Seu Melhor no Ministério Semana
+                2
+              </button>
+            </div>
+
+            <!-- NOSSA VIDA CRISTÃ -->
+            <h2 class="subtitle bg-darkred">NOSSA VIDA CRISTÃ</h2>
+            <div class="list">
+              <input type="text" value="20:15" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <span txtBold>Cântico</span>
+                  <input type="text" value="Número" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="20:20" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div id="tema-semana2" class="list">
+              <input type="text" value="20:30" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <input value="Tema (X min)" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="20:36" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <span txtBold inputNoMargin
+                    >Estudo bíblico de congregação (30 min)</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="21:06" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <span txtBold inputNoMargin>Comentários finais (3 min)</span>
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <input type="text" value="21:10" inputNoMargin />
+              <ul>
+                <li class="color-darkgoldenrod">
+                  <span txtBold>Cântico</span>
+                  <input type="text" value="Número" txtBold inputNoMargin />
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section>
+            <div style="display: flex; transform: translateX(-100px)">
+              <div class="box">
+                <span class="label" txtBold>Presidente: </span>
+                <input type="text" value="Nome" txtBold />
+              </div>
+              <div class="box">
+                <span class="label" txtBold>Sala B: </span>
+                <input type="text" value="Nome" txtBold />
+              </div>
+            </div>
+            <div class="box">
+              <span class="label" txtBold>Oração: </span>
+              <input type="text" value="Nome" txtBold />
+            </div>
+            <div
+              style="margin-top: 55px; display: flex; gap: 20px"
+              class="column-two-margin"
+            >
+              <div class="box">
+                <span class="label" txtBold>Salão principal </span> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin />
+              </div>
+              <div class="box">
+                <span class="label" txtBold>Sala Adicional </span> <br />
+                <input type="text" value="" txtBold inputNoMargin /> <br />
+                <input type="text" value="" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin />
+              </div>
+            </div>
+            <div
+              style="margin-top: 32px; display: flex; gap: 20px"
+              class="column-two-margin"
+            >
+              <div class="box">
+                <span class="label" txtBold>Salão principal </span> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin />
+                <div id="nome-ministerio-semana2-sp" class="hidden">
+                  <input type="text" value="Nome" txtBold inputNoMargin />
+                </div>
+              </div>
+              <div class="box">
+                <span class="label" txtBold>Sala Adicional </span> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+                <input type="text" value="Nome" txtBold inputNoMargin />
+                <div id="nome-ministerio-semana2-sa" class="hidden">
+                  <input type="text" value="Nome" txtBold inputNoMargin />
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 60px" class="box column-two-margin">
+              <input
+                id="name-to-quit2"
+                type="text"
+                value="Nome"
+                txtBold
+                inputNoMargin
+              />
+              <br />
+              <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+              <span style="margin-left: -108px" class="label" txtBold
+                >Dirigente/leitor:</span
+              >
+              <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+              <input type="text" value="Nome" txtBold inputNoMargin /> <br />
+              <span style="margin-left: -58px" class="label" txtBold
+                >Oração:</span
+              >
+              <input type="text" value="Nome" txtBold inputNoMargin />
+            </div>
+          </section>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <button id="btn-delete2" class="btn-deletetema">
+            Retirar/Colocar um tema de Nossa Vida Cristã Semana 2
+          </button>
+        </div>
+      </main>
+
+      <div style="display: flex; justify-content: center">
+        <button id="btn" class="btn-genpdf" onclick="window.print()">
+          Gerar PDF
+        </button>
+      </div>
     </div>
-    
+
     <script src="./script.js"></script>
 
     <script>
-        const { jsPDF } = window.jspdf.jsPDF;
+      const { jsPDF } = window.jspdf.jsPDF;
 
-        function generatePDF(){          
-            const pdf = new jsPDF();
-            pdf.fromHTML(document.body, {
-                callback: function (pdf) {
-                    pdf.save("programação-da-reunião.pdf")
-                }
-            });
-        }
+      function generatePDF() {
+        const pdf = new jsPDF();
+        pdf.fromHTML(document.body, {
+          callback: function (pdf) {
+            pdf.save("programação-da-reunião.pdf");
+          },
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
